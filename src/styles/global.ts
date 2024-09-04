@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
   
   body, button, textarea, input {
     font-family: ${(props) => props.theme.fonts["secondary-font"]};
+    font-size: 1rem;
   }
 
   input, textarea {
