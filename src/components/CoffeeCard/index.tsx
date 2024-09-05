@@ -32,7 +32,7 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
         </div>
         <div className="actions">
           <Counter />
-          <CartButton variant="purple" />
+          <CartButton variant="purple" counter={0} />
         </div>
       </footer>
     </CoffeeCardContainer>

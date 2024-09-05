@@ -3,7 +3,7 @@ import { ButtonVariants, CartButtonContainer } from "./styled"
 
 interface CartButtonProps {
   variant?: ButtonVariants
-  counter?: number
+  counter: number
 }
 
 export function CartButton({

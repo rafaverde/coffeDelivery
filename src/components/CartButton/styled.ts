@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
-export type ButtonVariants = "yellow" | "purple"
+export type ButtonVariants = keyof typeof bgButtonVariants
 
 interface CartButtonContainerProps {
   $variant: ButtonVariants
@@ -8,18 +8,18 @@ interface CartButtonContainerProps {
 
 const bgButtonVariants = {
   yellow: {
-    background: "#F1E9C9",
-    color: "#c47f17",
-    hoverBg: "#dbac2c",
-    hoverColor: "#ffffff",
+    background: "yellow-light",
+    color: "yellow-dark",
+    hoverBg: "yellow-dark",
+    hoverColor: "white",
   },
   purple: {
-    background: "#4B2995",
-    color: "#ffffff",
-    hoverBg: "#8047F8",
-    hoverColor: "#ffffff",
+    background: "purple-dark",
+    color: "white",
+    hoverBg: "purple",
+    hoverColor: "white",
   },
-}
+} as const
 
 export const CartButtonContainer = styled.button<CartButtonContainerProps>`
   display: flex;
@@ -33,20 +33,16 @@ export const CartButtonContainer = styled.button<CartButtonContainerProps>`
   transition: all 300ms;
   cursor: pointer;
 
-  ${(props) => {
-    return css`
-      background-color: ${bgButtonVariants[props.$variant].background};
-      color: ${bgButtonVariants[props.$variant].color};
-    `
-  }}
+  background-color: ${(props) =>
+    props.theme.colors[bgButtonVariants[props.$variant].background]};
+  color: ${(props) =>
+    props.theme.colors[bgButtonVariants[props.$variant].color]};
 
   &:hover {
-    ${(props) => {
-      return css`
-        background-color: ${bgButtonVariants[props.$variant].hoverBg};
-        color: ${bgButtonVariants[props.$variant].hoverColor};
-      `
-    }}
+    background-color: ${(props) =>
+      props.theme.colors[bgButtonVariants[props.$variant].hoverBg]};
+    color: ${(props) =>
+      props.theme.colors[bgButtonVariants[props.$variant].hoverColor]};
   }
 
   span {

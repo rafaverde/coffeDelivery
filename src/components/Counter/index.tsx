@@ -12,6 +12,7 @@ export function Counter() {
         name="quantity"
         id="quantity"
         placeholder="0"
+        min={1}
         // value={0}
       />
       <button>
