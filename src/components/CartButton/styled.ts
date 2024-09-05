@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 export type ButtonVariants = "yellow" | "purple"
 
 interface CartButtonContainerProps {
-  variant: ButtonVariants
+  $variant: ButtonVariants
 }
 
 const bgButtonVariants = {
@@ -35,16 +35,16 @@ export const CartButtonContainer = styled.button<CartButtonContainerProps>`
 
   ${(props) => {
     return css`
-      background-color: ${bgButtonVariants[props.variant].background};
-      color: ${bgButtonVariants[props.variant].color};
+      background-color: ${bgButtonVariants[props.$variant].background};
+      color: ${bgButtonVariants[props.$variant].color};
     `
   }}
 
   &:hover {
     ${(props) => {
       return css`
-        background-color: ${bgButtonVariants[props.variant].hoverBg};
-        color: ${bgButtonVariants[props.variant].hoverColor};
+        background-color: ${bgButtonVariants[props.$variant].hoverBg};
+        color: ${bgButtonVariants[props.$variant].hoverColor};
       `
     }}
   }

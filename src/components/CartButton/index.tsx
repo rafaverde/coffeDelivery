@@ -3,12 +3,16 @@ import { ButtonVariants, CartButtonContainer } from "./styled"
 
 interface CartButtonProps {
   variant?: ButtonVariants
+  counter?: number
 }
 
-export function CartButton({ variant = "yellow" }: CartButtonProps) {
+export function CartButton({
+  variant = "yellow",
+  counter = 0,
+}: CartButtonProps) {
   return (
-    <CartButtonContainer variant={variant}>
-      <span>99</span>
+    <CartButtonContainer $variant={variant}>
+      {counter > 0 ? <span>{counter}</span> : null}
       <ShoppingCart size={22} weight="fill" />
     </CartButtonContainer>
   )
