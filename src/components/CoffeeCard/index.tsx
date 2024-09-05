@@ -1,24 +1,34 @@
-import coffeeImg from "/images/coffees/americano.png"
-
 import { CoffeeCardContainer } from "./styles"
 
 import { CartButton } from "../../components/CartButton"
 import { Counter } from "../Counter"
 
-export function CoffeeCard() {
+interface CoffeeProps {
+  coffee: {
+    id: string
+    title: string
+    description: string
+    tags: string[]
+    price: number
+    image: string
+  }
+}
+
+export function CoffeeCard({ coffee }: CoffeeProps) {
   return (
     <CoffeeCardContainer>
-      <img src={coffeeImg} alt="" />
+      <img src={coffee.image} alt="" />
       <div className="tagWrapper">
-        <span>Tradicional</span>
-        <span>Cappuccino</span>
+        {coffee
+          ? coffee.tags.map((tag) => <span key={coffee.id + tag}>{tag}</span>)
+          : null}
       </div>
-      <h3>Expresso Tradicional</h3>
-      <p>O tradicional café feito com água quente e grãos moídos</p>
+      <h3>{coffee.title}</h3>
+      <p>{coffee.description}</p>
 
       <footer>
         <div className="price">
-          R$ <span>9,90</span>
+          R$ <span>{coffee.price.toFixed(2).toString().replace(".", ",")}</span>
         </div>
         <div className="actions">
           <Counter />

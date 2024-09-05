@@ -12,7 +12,7 @@ export function Counter() {
         name="quantity"
         id="quantity"
         placeholder="0"
-        value={0}
+        // value={0}
       />
       <button>
         <Plus size={18} weight="bold" />

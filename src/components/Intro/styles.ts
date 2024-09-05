@@ -3,7 +3,7 @@ import bgIntro from "../../assets/intro-background.jpg"
 
 export const IntroContainer = styled.div`
   width: 100%;
-  padding: 5rem 0;
+  padding: 5rem 1rem;
 
   background: url(${bgIntro}) center center;
   background-size: cover;

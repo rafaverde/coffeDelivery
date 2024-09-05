@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const CoffeeListContainer = styled.div`
   width: 100%;
-  padding: 5rem 0;
+  padding: 5rem 1rem;
 
   .content {
     max-width: 75rem;
