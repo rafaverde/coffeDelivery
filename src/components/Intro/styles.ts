@@ -15,6 +15,10 @@ export const IntroContainer = styled.div`
     justify-content: space-between;
     gap: 2rem;
     margin: 0 auto;
+
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+    }
   }
 
   h2 {
@@ -23,6 +27,11 @@ export const IntroContainer = styled.div`
     margin-bottom: 1rem;
 
     color: ${({ theme }) => theme.colors["base-title"]};
+
+    @media (max-width: 768px) {
+      line-height: 1;
+      font-size: 2.4rem;
+    }
   }
 
   .subtitle {
@@ -38,6 +47,10 @@ export const IntroContainer = styled.div`
     justify-content: start;
     gap: 1.25rem;
     margin-top: 4rem;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
   }
 
   .contentWrapper {
@@ -71,6 +84,10 @@ export const IntroContainer = styled.div`
   }
 
   .introImage img {
-    min-width: 35rem;
+    max-width: 35rem;
+
+    @media (max-width: 768px) {
+      max-width: 90%;
+    }
   }
 `

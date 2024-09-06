@@ -35,6 +35,19 @@ export const CheckoutContent = styled.div`
     display: flex;
     gap: 1rem;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+
+    .userInfos {
+      width: 100%;
+    }
+
+    .selectPayment {
+      flex-direction: column;
+    }
+  }
 `
 
 export const FormUserInformation = styled.form`

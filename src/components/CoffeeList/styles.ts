@@ -18,5 +18,9 @@ export const CoffeeListContainer = styled.div`
     align-items: start;
     justify-content: flex-start;
     gap: 1rem;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
   }
 `

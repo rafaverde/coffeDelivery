@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const SuccessContainer = styled.main`
+export const SuccessContainer = styled.div`
   width: 100%;
   height: calc(100vh - 140px);
   display: flex;
@@ -17,6 +17,17 @@ export const SuccessContent = styled.div`
   flex-direction: column;
   align-items: stretch;
   gap: 2rem;
+
+  header {
+    h2 {
+      font-size: 2rem;
+      color: ${({ theme }) => theme.colors["yellow-dark"]};
+    }
+
+    p {
+      font-size: 1.25rem;
+    }
+  }
 
   main {
     display: flex;
@@ -78,6 +89,39 @@ export const SuccessContent = styled.div`
     }
     &.purple {
       background-color: ${({ theme }) => theme.colors.purple};
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+
+    header {
+      h2 {
+        line-height: 1;
+      }
+    }
+
+    main {
+      width: 100%;
+      flex-direction: column-reverse;
+      align-items: center;
+
+      img {
+        max-width: 80%;
+      }
+
+      .gradientBorder {
+        max-width: 100%;
+      }
+
+      .gradientPadding {
+        gap: 1.5rem;
+      }
+
+      .contentWrapper {
+        max-width: 100%;
+      }
     }
   }
 `
