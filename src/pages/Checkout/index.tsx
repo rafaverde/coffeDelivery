@@ -10,11 +10,15 @@ import {
   CheckoutContainer,
   CheckoutContent,
   FormUserInformation,
+  OrderInfoBox,
+  ConfirmButton,
 } from "./styles"
 
 import { SelectPaymentButton } from "../../components/SelectPaymentButton"
 
 import { useTheme } from "styled-components"
+import { ProductOrderCard } from "../../components/ProductOrderCard"
+import { NavLink } from "react-router-dom"
 
 export function Checkout() {
   const theme = useTheme()
@@ -95,6 +99,27 @@ export function Checkout() {
 
         <div className="orderInfos">
           <h2>Confira seu pedido</h2>
+          <OrderInfoBox>
+            <ProductOrderCard />
+            <ProductOrderCard />
+
+            <div className="subtotals">
+              <span>Total de itens</span>
+              <span className="price">R$ 29,70</span>
+            </div>
+            <div className="subtotals">
+              <span>Entrega</span>
+              <span className="price">R$ 3,50</span>
+            </div>
+            <div className="totals">
+              <span>Total</span>
+              <span>R$ 33,20</span>
+            </div>
+
+            <NavLink to={"/success"}>
+              <ConfirmButton>Confirmar pedido</ConfirmButton>
+            </NavLink>
+          </OrderInfoBox>
         </div>
       </CheckoutContent>
     </CheckoutContainer>

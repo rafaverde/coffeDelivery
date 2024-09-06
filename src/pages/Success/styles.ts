@@ -1,0 +1,83 @@
+import styled from "styled-components"
+
+export const SuccessContainer = styled.main`
+  width: 100%;
+  height: calc(100vh - 140px);
+  display: flex;
+  overflow: scroll;
+  flex-direction: column;
+`
+
+export const SuccessContent = styled.div`
+  width: 75rem;
+  margin: 0 auto;
+  padding: 5rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2rem;
+
+  main {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    .gradientBorder {
+      display: flex;
+      max-width: 50%;
+      position: relative;
+      padding: 2px;
+      background: linear-gradient(
+        to right,
+        ${(props) => props.theme.colors.yellow},
+        ${(props) => props.theme.colors.purple}
+      );
+      border-radius: 9px 36px;
+    }
+
+    .gradientPadding {
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 2.5rem;
+
+      border-radius: 7px 34px;
+      /* border: 1px solid ${({ theme }) => theme.colors.purple}; */
+      background-color: ${({ theme }) => theme.colors.background};
+    }
+  }
+
+  .contentWrapper {
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-right: 1rem;
+  }
+
+  .iconTitleWrapper {
+    display: flex;
+    align-items: center;
+
+    padding: 0.5rem;
+
+    border-radius: 99px;
+    color: ${({ theme }) => theme.colors.white};
+
+    &.yellow-dark {
+      background-color: ${({ theme }) => theme.colors["yellow-dark"]};
+    }
+    &.yellow {
+      background-color: ${({ theme }) => theme.colors.yellow};
+    }
+    &.dark-gray {
+      background-color: ${({ theme }) => theme.colors["base-title"]};
+    }
+    &.purple {
+      background-color: ${({ theme }) => theme.colors.purple};
+    }
+  }
+`

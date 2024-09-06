@@ -12,7 +12,7 @@ export const CoffeeCardContainer = styled.div`
 
   background-color: ${({ theme }) => theme.colors["base-card"]};
 
-  border-radius: 6px 36px;
+  border-radius: 8px 36px;
 
   img {
     width: 7.5rem;
