@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const CoffeeCardContainer = styled.div`
   width: 18rem;
-  padding: 4rem 1.6rem 1.25rem;
+  padding: 4rem 1.6rem 2rem;
   position: relative;
   margin-top: 4rem;
 

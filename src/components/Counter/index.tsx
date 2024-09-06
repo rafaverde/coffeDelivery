@@ -11,9 +11,11 @@ export function Counter() {
         type="number"
         name="quantity"
         id="quantity"
-        placeholder="0"
+        placeholder="1"
         min={1}
-        // value={0}
+        readOnly
+        disabled
+        // value={1}
       />
       <button>
         <Plus size={18} weight="bold" />
