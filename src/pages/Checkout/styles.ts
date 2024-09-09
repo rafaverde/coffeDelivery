@@ -8,7 +8,7 @@ export const CheckoutContainer = styled.main`
   flex-direction: column;
 `
 
-export const CheckoutContent = styled.div`
+export const CheckoutForm = styled.form`
   width: 75rem;
   margin: 0 auto;
   padding: 5rem 1rem;
@@ -50,7 +50,7 @@ export const CheckoutContent = styled.div`
   }
 `
 
-export const FormUserInformation = styled.form`
+export const UserInformation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

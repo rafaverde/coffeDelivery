@@ -8,8 +8,8 @@ import {
 
 import {
   CheckoutContainer,
-  CheckoutContent,
-  FormUserInformation,
+  CheckoutForm,
+  UserInformation,
   OrderInfoBox,
   ConfirmButton,
 } from "./styles"
@@ -18,17 +18,25 @@ import { SelectPaymentButton } from "../../components/SelectPaymentButton"
 
 import { useTheme } from "styled-components"
 import { ProductOrderCard } from "../../components/ProductOrderCard"
-import { NavLink } from "react-router-dom"
+
+import { useForm } from "react-hook-form"
 
 export function Checkout() {
   const theme = useTheme()
+  const { register, handleSubmit, watch } = useForm()
+
+  const selectedPaymentMethod = watch("paymentMethod")
+
+  function handleCreateOrder(data: any) {
+    console.log(data)
+  }
 
   return (
     <CheckoutContainer>
-      <CheckoutContent>
+      <CheckoutForm onSubmit={handleSubmit(handleCreateOrder)}>
         <div className="userInfos">
           <h2>Insira suas informações</h2>
-          <FormUserInformation>
+          <UserInformation>
             <div className="addressInfo">
               <div className="header">
                 <MapPinLine size={22} color={theme.colors["yellow-dark"]} />
@@ -44,19 +52,31 @@ export function Checkout() {
                     id="zipcode"
                     placeholder="CEP"
                     maxLength={9}
+                    {...register("zipcode")}
                   />
                 </div>
                 <div>
-                  <input type="text" id="address" placeholder="Rua" />
+                  <input
+                    type="text"
+                    id="address"
+                    placeholder="Rua"
+                    {...register("address")}
+                  />
                 </div>
 
                 <div>
-                  <input type="text" id="addressNumber" placeholder="Número" />
+                  <input
+                    type="text"
+                    id="addressNumber"
+                    placeholder="Número"
+                    {...register("addressNumber")}
+                  />
 
                   <input
                     type="text"
                     id="addressExtra"
                     placeholder="Complemento"
+                    {...register("addressExtra")}
                   />
                 </div>
                 <div>
@@ -64,9 +84,20 @@ export function Checkout() {
                     type="text"
                     id="addressNeighborhood"
                     placeholder="Bairro"
+                    {...register("addressNeighborhood")}
                   />
-                  <input type="text" id="addressCity" placeholder="Cidade" />
-                  <input type="text" id="addressState" placeholder="Estado" />
+                  <input
+                    type="text"
+                    id="addressCity"
+                    placeholder="Cidade"
+                    {...register("addressCity")}
+                  />
+                  <input
+                    type="text"
+                    id="addressState"
+                    placeholder="Estado"
+                    {...register("addressCity")}
+                  />
                 </div>
               </div>
             </div>
@@ -85,16 +116,31 @@ export function Checkout() {
                 </div>
 
                 <div className="selectPayment">
-                  <SelectPaymentButton icon={PixLogo} title="PIX" isactive />
+                  <SelectPaymentButton
+                    icon={PixLogo}
+                    title="Pix"
+                    isactive={selectedPaymentMethod === "pix"}
+                    value="pix"
+                    {...register("paymentMethod")}
+                  />
                   <SelectPaymentButton
                     icon={CreditCard}
                     title="Crédito/Débito"
+                    isactive={selectedPaymentMethod === "credit-card"}
+                    value="credit-card"
+                    {...register("paymentMethod")}
                   />
-                  <SelectPaymentButton icon={Money} title="Dinheiro" />
+                  <SelectPaymentButton
+                    icon={Money}
+                    title="Dinheiro"
+                    isactive={selectedPaymentMethod === "cash"}
+                    value="cash"
+                    {...register("paymentMethod")}
+                  />
                 </div>
               </div>
             </div>
-          </FormUserInformation>
+          </UserInformation>
         </div>
 
         <div className="orderInfos">
@@ -116,12 +162,10 @@ export function Checkout() {
               <span>R$ 33,20</span>
             </div>
 
-            <NavLink to={"/success"}>
-              <ConfirmButton>Confirmar pedido</ConfirmButton>
-            </NavLink>
+            <ConfirmButton type="submit">Confirmar pedido</ConfirmButton>
           </OrderInfoBox>
         </div>
-      </CheckoutContent>
+      </CheckoutForm>
     </CheckoutContainer>
   )
 }

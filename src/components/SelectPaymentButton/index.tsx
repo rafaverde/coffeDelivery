@@ -1,24 +1,23 @@
-import { ButtonHTMLAttributes } from "react"
+import { forwardRef, InputHTMLAttributes, LegacyRef } from "react"
 import { SelectPaymentButtonContainer } from "./styles"
 import { IconProps } from "@phosphor-icons/react"
 
 interface SelectPaymentButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  extends InputHTMLAttributes<HTMLInputElement> {
   title: string
   icon: React.ComponentType<IconProps>
   isactive?: boolean
 }
 
-export function SelectPaymentButton({
-  icon: Icon,
-  title,
-  isactive = false,
-  ...props
-}: SelectPaymentButtonProps) {
+export const SelectPaymentButton = forwardRef(function SelectPaymentButton(
+  { icon: Icon, title, isactive = false, ...rest }: SelectPaymentButtonProps,
+  ref: LegacyRef<HTMLInputElement>
+) {
   return (
-    <SelectPaymentButtonContainer $isactive={isactive} {...props}>
+    <SelectPaymentButtonContainer $isactive={isactive} data-state={isactive}>
+      <input type="radio" id={title} ref={ref} {...rest} />
       <Icon size={22} />
       {title}
     </SelectPaymentButtonContainer>
   )
-}
+})
