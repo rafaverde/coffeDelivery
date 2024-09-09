@@ -20,16 +20,80 @@ import { useTheme } from "styled-components"
 import { ProductOrderCard } from "../../components/ProductOrderCard"
 
 import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as zod from "zod"
+import { useEffect, useState } from "react"
+
+const newOrderFormValidationSchema = zod.object({
+  zipcode: zod
+    .string()
+    .min(9, "Insira o CEP no formato 00000-000")
+    .max(9, "Insira o CEP no formato 00000-000"),
+  address: zod.string().min(1, "Informe o nome da rua."),
+  addressNumber: zod.string().min(1, "Informe o número do local."),
+  addressExtra: zod.string().optional(),
+  addressNeighborhood: zod.string().min(1, "Informe o bairro."),
+  addressCity: zod.string().min(1, "Informe a cidade."),
+  addressState: zod
+    .string()
+    .min(2, "Informe o estado")
+    .max(2, "Digite apenas a sigla do estado."),
+  paymentMethod: zod.enum(["pix", "credit-card", "cash"]),
+})
+
+type newOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
+
+export interface Order {
+  id: string
+  userInfo: newOrderFormData
+  products: {
+    name: string
+    quantity: number
+    price: number
+  }
+  total: number
+}
 
 export function Checkout() {
   const theme = useTheme()
-  const { register, handleSubmit, watch } = useForm()
+  const { register, handleSubmit, watch, formState } =
+    useForm<newOrderFormData>({
+      resolver: zodResolver(newOrderFormValidationSchema),
+      defaultValues: {
+        zipcode: "",
+        address: "",
+        addressNumber: "",
+        addressExtra: "",
+        addressNeighborhood: "",
+        addressCity: "Natal",
+        addressState: "RN",
+        paymentMethod: "pix",
+      },
+    })
+
+  const [order, setOrder] = useState<Order>()
 
   const selectedPaymentMethod = watch("paymentMethod")
+  const isOrderFormDataValid = formState.isValid
 
-  function handleCreateOrder(data: any) {
-    console.log(data)
+  function handleCreateOrder(data: newOrderFormData) {
+    setOrder({
+      id: String(new Date().getTime()),
+      userInfo: data,
+      products: {
+        name: "Tradicional",
+        quantity: 9,
+        price: 9.9,
+      },
+      total: 9.9,
+    })
   }
+
+  useEffect(() => {
+    if (order) {
+      console.log(order)
+    }
+  }, [order])
 
   return (
     <CheckoutContainer>
@@ -92,12 +156,10 @@ export function Checkout() {
                     placeholder="Cidade"
                     {...register("addressCity")}
                   />
-                  <input
-                    type="text"
-                    id="addressState"
-                    placeholder="Estado"
-                    {...register("addressCity")}
-                  />
+                  <select id="addressState" {...register("addressState")}>
+                    <option value="default">Escolha um estado...</option>
+                    <option value="RN">RN</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -162,7 +224,9 @@ export function Checkout() {
               <span>R$ 33,20</span>
             </div>
 
-            <ConfirmButton type="submit">Confirmar pedido</ConfirmButton>
+            <ConfirmButton type="submit" disabled={!isOrderFormDataValid}>
+              Confirmar pedido
+            </ConfirmButton>
           </OrderInfoBox>
         </div>
       </CheckoutForm>

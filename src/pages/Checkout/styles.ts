@@ -95,7 +95,8 @@ export const UserInformation = styled.div`
       width: auto;
     }
 
-    input {
+    input,
+    select {
       width: 100%;
       padding: 1rem;
 
@@ -103,8 +104,9 @@ export const UserInformation = styled.div`
       border: 1px solid ${({ theme }) => theme.colors["base-button"]};
       border-radius: 8px;
 
-      &[id="addressNumber"] {
-        max-width: 30%;
+      &[id="addressNumber"],
+      &[id="addressState"] {
+        max-width: 20%;
       }
     }
   }
@@ -155,4 +157,9 @@ export const ConfirmButton = styled.button`
 
   text-transform: uppercase;
   font-weight: bolder;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `
