@@ -15,10 +15,7 @@ export interface CoffeeToAddData {
 }
 
 export function CoffeeCard({ coffee }: CoffeeProps) {
-  const { productList } = useContext(OrderContext)
   const { handleAddProductToCart } = useContext(OrderContext)
-
-  const coffeeExists = productList.filter((item) => item.id === coffee.id)
 
   const [calculatedPrice, setCalculatedPrice] = useState(coffee.price)
   const [actualQuantity, setActualQuantity] = useState(1)

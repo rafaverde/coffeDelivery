@@ -43,23 +43,6 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     })
   }
 
-  // function handleAddProductToCart(product: CoffeeToAddData) {
-  //   const productExists = productList.find((item) => item.id === product.id)
-
-  //   if (productExists) {
-  //     const newQuantity = product.quantity
-  //     const updatedList: CoffeeToAddData[] = productList.filter(
-  //       (item) => item.id !== product.id
-  //     )
-  //     console.log(newQuantity, product.quantity)
-  //     productExists.quantity = newQuantity + product.quantity
-
-  //     return setProductList([productExists, ...updatedList])
-  //   } else {
-  //     return setProductList((state) => [...state, product])
-  //   }
-  // }
-
   useEffect(() => {
     console.log(productList)
   }, [productList])

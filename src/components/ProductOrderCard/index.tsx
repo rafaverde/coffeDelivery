@@ -32,10 +32,10 @@ export function ProductOrderCard({
   }
 
   useEffect(() => {
-    if (actualQuantity !== quantity) {
+    if (actualQuantity > quantity) {
       handleAddProductToCart(coffeeToAdd)
     }
-  }, [actualQuantity, quantity, handleAddProductToCart, coffeeToAdd])
+  }, [actualQuantity, handleAddProductToCart])
 
   return (
     <ProductOrderCardContainer key={id}>
