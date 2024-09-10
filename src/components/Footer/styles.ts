@@ -9,7 +9,7 @@ export const FooterContainer = styled.div`
   justify-content: center;
   gap: 0.3rem;
 
-  font-weight: bold;
+  font-size: 0.875rem;
 
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.purple};

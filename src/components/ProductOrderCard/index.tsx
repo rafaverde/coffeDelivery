@@ -1,24 +1,59 @@
 import { Trash } from "@phosphor-icons/react"
 
-import { ProductOrderCardContainer, Controls, RemoveButton } from "./styles"
+import { Controls, ProductOrderCardContainer, RemoveButton } from "./styles"
 
+import { CoffeeToAddData } from "../CoffeeCard"
 import { Counter } from "../Counter"
+import { useContext, useEffect, useState } from "react"
+import { OrderContext } from "../../contexts/OrderContext"
 
-export function ProductOrderCard() {
+export function ProductOrderCard({
+  id,
+  title,
+  price,
+  image,
+  quantity,
+}: CoffeeToAddData) {
+  const { handleAddProductToCart } = useContext(OrderContext)
+  const [calculatedPrice, setCalculatedPrice] = useState(price)
+  const [actualQuantity, setActualQuantity] = useState(quantity)
+
+  const coffeeToAdd: CoffeeToAddData = {
+    id,
+    title,
+    price,
+    image,
+    quantity: actualQuantity,
+  }
+
+  function handleQuantityChange(quantity: number) {
+    setCalculatedPrice(quantity * price)
+    setActualQuantity(quantity)
+  }
+
+  useEffect(() => {
+    if (actualQuantity !== quantity) {
+      handleAddProductToCart(coffeeToAdd)
+    }
+  }, [actualQuantity, quantity, handleAddProductToCart, coffeeToAdd])
+
   return (
-    <ProductOrderCardContainer>
-      <img src="/images/coffees/americano.png" alt="" />
+    <ProductOrderCardContainer key={id}>
+      <img src={image} alt="" />
       <div>
-        <span>Expresso Tradicional</span>
+        <span>{title}</span>
         <Controls>
-          <Counter />
+          <Counter
+            onQuantityChange={handleQuantityChange}
+            actualQuantity={actualQuantity}
+          />
           <RemoveButton>
             <Trash />
             Remover
           </RemoveButton>
         </Controls>
       </div>
-      <span>R$9,90</span>
+      <span>{calculatedPrice.toFixed(2).toString().replace(".", ",")}</span>
     </ProductOrderCardContainer>
   )
 }

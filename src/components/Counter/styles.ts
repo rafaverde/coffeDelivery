@@ -29,6 +29,7 @@ export const CounterContainer = styled.div`
     background: transparent;
     text-align: center;
     appearance: textfield;
+    user-select: none;
 
     font-size: 1rem;
 

@@ -1,10 +1,32 @@
 import { Minus, Plus } from "@phosphor-icons/react"
 import { CounterContainer } from "./styles"
+import { useEffect, useState } from "react"
 
-export function Counter() {
+interface CounterProps {
+  actualQuantity?: number
+  onQuantityChange: (quantity: number) => void
+}
+
+export function Counter({ onQuantityChange, actualQuantity }: CounterProps) {
+  const [quantity, setQuantity] = useState(actualQuantity ? actualQuantity : 1)
+
+  function decrementQuantity() {
+    if (quantity > 0) {
+      setQuantity((state) => state - 1)
+    }
+  }
+
+  function incrementQuantity() {
+    setQuantity((state) => state + 1)
+  }
+
+  useEffect(() => {
+    onQuantityChange(quantity)
+  }, [quantity, onQuantityChange])
+
   return (
     <CounterContainer>
-      <button>
+      <button onClick={decrementQuantity} disabled={quantity === 1}>
         <Minus size={18} weight="bold" />
       </button>
       <input
@@ -14,10 +36,9 @@ export function Counter() {
         placeholder="1"
         min={1}
         readOnly
-        disabled
-        // value={1}
+        value={quantity}
       />
-      <button>
+      <button onClick={incrementQuantity}>
         <Plus size={18} weight="bold" />
       </button>
     </CounterContainer>

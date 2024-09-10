@@ -22,7 +22,8 @@ import { ProductOrderCard } from "../../components/ProductOrderCard"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as zod from "zod"
-import { useEffect, useState } from "react"
+import { useContext, useState } from "react"
+import { OrderContext } from "../../contexts/OrderContext"
 
 const newOrderFormValidationSchema = zod.object({
   zipcode: zod
@@ -56,6 +57,7 @@ export interface Order {
 
 export function Checkout() {
   const theme = useTheme()
+  const { productList } = useContext(OrderContext)
   const { register, handleSubmit, watch, formState } =
     useForm<newOrderFormData>({
       resolver: zodResolver(newOrderFormValidationSchema),
@@ -88,12 +90,6 @@ export function Checkout() {
       total: 9.9,
     })
   }
-
-  useEffect(() => {
-    if (order) {
-      console.log(order)
-    }
-  }, [order])
 
   return (
     <CheckoutContainer>
@@ -208,8 +204,16 @@ export function Checkout() {
         <div className="orderInfos">
           <h2>Confira seu pedido</h2>
           <OrderInfoBox>
-            <ProductOrderCard />
-            <ProductOrderCard />
+            {productList.map((product) => (
+              <ProductOrderCard
+                id={product.id}
+                image={product.image}
+                price={product.price}
+                quantity={product.quantity}
+                title={product.title}
+                key={product.id}
+              />
+            ))}
 
             <div className="subtotals">
               <span>Total de itens</span>
@@ -223,7 +227,6 @@ export function Checkout() {
               <span>Total</span>
               <span>R$ 33,20</span>
             </div>
-
             <ConfirmButton type="submit" disabled={!isOrderFormDataValid}>
               Confirmar pedido
             </ConfirmButton>

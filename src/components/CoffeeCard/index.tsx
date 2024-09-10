@@ -2,19 +2,40 @@ import { CoffeeCardContainer } from "./styles"
 
 import { CartButton } from "../../components/CartButton"
 import { Counter } from "../Counter"
+import { useContext, useState } from "react"
 
-interface CoffeeProps {
-  coffee: {
-    id: string
-    title: string
-    description: string
-    tags: string[]
-    price: number
-    image: string
-  }
+import { CoffeeProps, OrderContext } from "../../contexts/OrderContext"
+
+export interface CoffeeToAddData {
+  id: string
+  title: string
+  image: string
+  price: number
+  quantity: number
 }
 
 export function CoffeeCard({ coffee }: CoffeeProps) {
+  const { productList } = useContext(OrderContext)
+  const { handleAddProductToCart } = useContext(OrderContext)
+
+  const coffeeExists = productList.filter((item) => item.id === coffee.id)
+
+  const [calculatedPrice, setCalculatedPrice] = useState(coffee.price)
+  const [actualQuantity, setActualQuantity] = useState(1)
+
+  const handleTotalPrice = (quantity: number) => {
+    setCalculatedPrice(quantity * coffee.price)
+    setActualQuantity(quantity)
+  }
+
+  const coffeeToAdd: CoffeeToAddData = {
+    id: coffee.id,
+    title: coffee.title,
+    image: coffee.image,
+    price: coffee.price,
+    quantity: actualQuantity,
+  }
+
   return (
     <CoffeeCardContainer>
       <img src={coffee.image} alt="" />
@@ -28,11 +49,15 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
 
       <footer>
         <div className="price">
-          R$ <span>{coffee.price.toFixed(2).toString().replace(".", ",")}</span>
+          R${" "}
+          <span>{calculatedPrice.toFixed(2).toString().replace(".", ",")}</span>
         </div>
         <div className="actions">
-          <Counter />
-          <CartButton variant="purple" counter={0} />
+          <Counter onQuantityChange={handleTotalPrice} />
+          <CartButton
+            variant="purple"
+            onAddToCart={() => handleAddProductToCart(coffeeToAdd)}
+          />
         </div>
       </footer>
     </CoffeeCardContainer>

@@ -4,7 +4,7 @@ export const ProductOrderCardContainer = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 0;
   gap: 1rem;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors["base-button"]};
