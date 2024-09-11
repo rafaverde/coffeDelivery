@@ -66,4 +66,17 @@ export const CartButtonContainer = styled.button<CartButtonContainerProps>`
 
     border-radius: 99px;
   }
+
+  svg[data-spinnig] {
+    animation: rotate 2400ms forwards linear infinite;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `

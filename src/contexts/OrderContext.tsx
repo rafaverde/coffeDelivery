@@ -10,10 +10,13 @@ export interface CoffeeProps {
     price: number
     image: string
   }
+  isProductAdded?: boolean
 }
 
 interface OrderContextType {
   productList: CoffeeToAddData[]
+  productAdding: boolean
+
   handleAddProductToCart: (product: CoffeeToAddData) => void
   handleUpdateProductToCart: (product: CoffeeToAddData) => void
 }
@@ -26,6 +29,7 @@ export const OrderContext = createContext({} as OrderContextType)
 
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const [productList, setProductList] = useState<CoffeeToAddData[]>([])
+  const [productAdding, setProductAdding] = useState(false)
 
   function handleAddProductToCart(product: CoffeeToAddData) {
     setProductList((prevList) => {
@@ -42,6 +46,8 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
         return [...prevList, product]
       }
     })
+
+    setProductAdding(true)
   }
 
   function handleUpdateProductToCart(product: CoffeeToAddData) {
@@ -65,9 +71,30 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     console.log(productList)
   }, [productList])
 
+  useEffect(() => {
+    let timeout: number
+
+    if (productAdding) {
+      timeout = setTimeout(() => {
+        setProductAdding(false)
+      }, 500)
+    }
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
+  }, [productAdding])
+
   return (
     <OrderContext.Provider
-      value={{ productList, handleAddProductToCart, handleUpdateProductToCart }}
+      value={{
+        productList,
+        handleAddProductToCart,
+        handleUpdateProductToCart,
+        productAdding,
+      }}
     >
       {children}
     </OrderContext.Provider>
