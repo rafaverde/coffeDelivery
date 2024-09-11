@@ -14,7 +14,8 @@ export function ProductOrderCard({
   image,
   quantity,
 }: CoffeeToAddData) {
-  const { handleAddProductToCart } = useContext(OrderContext)
+  const { handleUpdateProductToCart } = useContext(OrderContext)
+
   const [calculatedPrice, setCalculatedPrice] = useState(price)
   const [actualQuantity, setActualQuantity] = useState(quantity)
 
@@ -32,10 +33,10 @@ export function ProductOrderCard({
   }
 
   useEffect(() => {
-    if (actualQuantity > quantity) {
-      handleAddProductToCart(coffeeToAdd)
+    if (actualQuantity !== quantity) {
+      handleUpdateProductToCart(coffeeToAdd)
     }
-  }, [actualQuantity, handleAddProductToCart])
+  }, [actualQuantity, coffeeToAdd])
 
   return (
     <ProductOrderCardContainer key={id}>

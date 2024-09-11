@@ -15,6 +15,7 @@ export interface CoffeeProps {
 interface OrderContextType {
   productList: CoffeeToAddData[]
   handleAddProductToCart: (product: CoffeeToAddData) => void
+  handleUpdateProductToCart: (product: CoffeeToAddData) => void
 }
 
 interface OrderContextProviderProps {
@@ -43,12 +44,31 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     })
   }
 
+  function handleUpdateProductToCart(product: CoffeeToAddData) {
+    setProductList((prevList) => {
+      const productExists = prevList.find((item) => item.id === product.id)
+
+      if (productExists) {
+        const updatedList = prevList.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: product.quantity }
+            : item
+        )
+        return updatedList
+      } else {
+        return [...prevList, product]
+      }
+    })
+  }
+
   useEffect(() => {
     console.log(productList)
   }, [productList])
 
   return (
-    <OrderContext.Provider value={{ productList, handleAddProductToCart }}>
+    <OrderContext.Provider
+      value={{ productList, handleAddProductToCart, handleUpdateProductToCart }}
+    >
       {children}
     </OrderContext.Provider>
   )
