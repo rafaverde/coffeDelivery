@@ -55,7 +55,7 @@ export interface Order {
   total: number
 }
 
-export function Checkout() {
+export function Cart() {
   const theme = useTheme()
   const { productList, totalItemsPrice } = useContext(OrderContext)
   const { register, handleSubmit, watch, formState } =
