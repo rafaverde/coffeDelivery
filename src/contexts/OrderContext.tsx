@@ -16,6 +16,7 @@ export interface CoffeeProps {
 interface OrderContextType {
   productList: CoffeeToAddData[]
   productAdding: boolean
+  totalItemsPrice: number
 
   handleAddProductToCart: (product: CoffeeToAddData) => void
   handleUpdateProductToCart: (product: CoffeeToAddData) => void
@@ -67,9 +68,14 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     })
   }
 
+  const totalItemsPrice = productList.reduce((accumulator, currentItem) => {
+    return (accumulator += currentItem.price * currentItem.quantity)
+  }, 0)
+
   useEffect(() => {
     console.log(productList)
-  }, [productList])
+    console.log(totalItemsPrice)
+  }, [productList, totalItemsPrice.toFixed(2)])
 
   useEffect(() => {
     let timeout: number
@@ -91,9 +97,10 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     <OrderContext.Provider
       value={{
         productList,
+        productAdding,
+        totalItemsPrice,
         handleAddProductToCart,
         handleUpdateProductToCart,
-        productAdding,
       }}
     >
       {children}

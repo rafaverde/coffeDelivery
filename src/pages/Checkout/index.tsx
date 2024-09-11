@@ -57,7 +57,7 @@ export interface Order {
 
 export function Checkout() {
   const theme = useTheme()
-  const { productList } = useContext(OrderContext)
+  const { productList, totalItemsPrice } = useContext(OrderContext)
   const { register, handleSubmit, watch, formState } =
     useForm<newOrderFormData>({
       resolver: zodResolver(newOrderFormValidationSchema),
@@ -90,6 +90,8 @@ export function Checkout() {
       total: 9.9,
     })
   }
+
+  const deliveryTax = totalItemsPrice > 0 ? 3.5 : 0
 
   return (
     <CheckoutContainer>
@@ -217,15 +219,22 @@ export function Checkout() {
 
             <div className="subtotals">
               <span>Total de itens</span>
-              <span className="price">R$ 29,70</span>
+              <span className="price">
+                R$ {totalItemsPrice.toFixed(2).replace(".", ",")}
+              </span>
             </div>
             <div className="subtotals">
               <span>Entrega</span>
-              <span className="price">R$ 3,50</span>
+              <span className="price">
+                R$ {deliveryTax.toFixed(2).replace(".", ",")}
+              </span>
             </div>
             <div className="totals">
               <span>Total</span>
-              <span>R$ 33,20</span>
+              <span>
+                R${" "}
+                {(totalItemsPrice + deliveryTax).toFixed(2).replace(".", ",")}
+              </span>
             </div>
             <ConfirmButton type="submit" disabled={!isOrderFormDataValid}>
               Confirmar pedido
