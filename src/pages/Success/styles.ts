@@ -35,9 +35,13 @@ export const SuccessContent = styled.div`
 
     gap: 2rem;
 
+    img {
+      width: 50%;
+    }
+
     .gradientBorder {
       display: flex;
-      max-width: 50%;
+      width: 50%;
       position: relative;
       padding: 2px;
       background: linear-gradient(
@@ -49,10 +53,11 @@ export const SuccessContent = styled.div`
     }
 
     .gradientPadding {
-      max-width: 100%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      gap: 2rem;
       padding: 2.5rem;
 
       border-radius: 7px 34px;
@@ -67,6 +72,14 @@ export const SuccessContent = styled.div`
     align-items: center;
     gap: 16px;
     margin-right: 1rem;
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
   }
 
   .iconTitleWrapper {
@@ -109,6 +122,7 @@ export const SuccessContent = styled.div`
 
       img {
         max-width: 80%;
+        height: auto;
       }
 
       .gradientBorder {

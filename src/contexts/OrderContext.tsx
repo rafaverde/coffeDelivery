@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react"
 import { CoffeeToAddData } from "../components/CoffeeCard"
+import { newOrderFormData } from "../pages/Cart"
 
 export interface CoffeeProps {
   coffee: {
@@ -13,13 +14,23 @@ export interface CoffeeProps {
   isProductAdded?: boolean
 }
 
+export interface Order {
+  id: string
+  userInfo: newOrderFormData
+  products: CoffeeToAddData[]
+  total: number
+}
+
 interface OrderContextType {
   productList: CoffeeToAddData[]
   productAdding: boolean
   totalItemsPrice: number
+  order?: Order
+  deliveryTax: number
 
   handleAddProductToCart: (product: CoffeeToAddData) => void
   handleUpdateProductToCart: (product: CoffeeToAddData) => void
+  CreateOrder: (data: newOrderFormData) => void
 }
 
 interface OrderContextProviderProps {
@@ -31,6 +42,12 @@ export const OrderContext = createContext({} as OrderContextType)
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const [productList, setProductList] = useState<CoffeeToAddData[]>([])
   const [productAdding, setProductAdding] = useState(false)
+
+  const [order, setOrder] = useState<Order>()
+  const totalItemsPrice = productList.reduce((accumulator, currentItem) => {
+    return (accumulator += currentItem.price * currentItem.quantity)
+  }, 0)
+  const deliveryTax = totalItemsPrice > 0 ? 3.5 : 0
 
   function handleAddProductToCart(product: CoffeeToAddData) {
     setProductList((prevList) => {
@@ -68,14 +85,23 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     })
   }
 
-  const totalItemsPrice = productList.reduce((accumulator, currentItem) => {
-    return (accumulator += currentItem.price * currentItem.quantity)
-  }, 0)
+  function CreateOrder(data: newOrderFormData) {
+    if (productList.length === 0) {
+      return alert(
+        "É necessário acrescentar pelo menos um produto ao carrinho."
+      )
+    }
 
-  useEffect(() => {
-    console.log(productList)
-    console.log(totalItemsPrice)
-  }, [productList, totalItemsPrice.toFixed(2)])
+    setOrder({
+      id: String(new Date().getTime()),
+      userInfo: data,
+      products: productList,
+      total: totalItemsPrice + deliveryTax,
+    })
+
+    setProductAdding(true)
+    console.log(order)
+  }
 
   useEffect(() => {
     let timeout: number
@@ -99,6 +125,9 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
         productList,
         productAdding,
         totalItemsPrice,
+        deliveryTax,
+        order,
+        CreateOrder,
         handleAddProductToCart,
         handleUpdateProductToCart,
       }}

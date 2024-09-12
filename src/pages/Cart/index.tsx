@@ -1,9 +1,11 @@
 import {
+  Check,
   CreditCard,
   CurrencyDollar,
   MapPinLine,
   Money,
   PixLogo,
+  Spinner,
 } from "@phosphor-icons/react"
 
 import {
@@ -22,8 +24,9 @@ import { ProductOrderCard } from "../../components/ProductOrderCard"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as zod from "zod"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { OrderContext } from "../../contexts/OrderContext"
+import { useNavigate } from "react-router-dom"
 
 const newOrderFormValidationSchema = zod.object({
   zipcode: zod
@@ -42,23 +45,19 @@ const newOrderFormValidationSchema = zod.object({
   paymentMethod: zod.enum(["pix", "credit-card", "cash"]),
 })
 
-type newOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
-
-export interface Order {
-  id: string
-  userInfo: newOrderFormData
-  products: {
-    name: string
-    quantity: number
-    price: number
-  }
-  total: number
-}
+export type newOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
 
 export function Cart() {
   const theme = useTheme()
-  const { productList, totalItemsPrice } = useContext(OrderContext)
-  const { register, handleSubmit, watch, formState } =
+  const navigate = useNavigate()
+  const {
+    productList,
+    totalItemsPrice,
+    deliveryTax,
+    CreateOrder,
+    productAdding,
+  } = useContext(OrderContext)
+  const { register, handleSubmit, watch, formState, reset } =
     useForm<newOrderFormData>({
       resolver: zodResolver(newOrderFormValidationSchema),
       defaultValues: {
@@ -73,25 +72,17 @@ export function Cart() {
       },
     })
 
-  const [order, setOrder] = useState<Order>()
-
   const selectedPaymentMethod = watch("paymentMethod")
   const isOrderFormDataValid = formState.isValid
 
   function handleCreateOrder(data: newOrderFormData) {
-    setOrder({
-      id: String(new Date().getTime()),
-      userInfo: data,
-      products: {
-        name: "Tradicional",
-        quantity: 9,
-        price: 9.9,
-      },
-      total: 9.9,
-    })
-  }
+    CreateOrder(data)
+    reset()
 
-  const deliveryTax = totalItemsPrice > 0 ? 3.5 : 0
+    setTimeout(() => {
+      navigate("/success")
+    }, 1000)
+  }
 
   return (
     <CheckoutContainer>
@@ -237,7 +228,16 @@ export function Cart() {
               </span>
             </div>
             <ConfirmButton type="submit" disabled={!isOrderFormDataValid}>
-              Confirmar pedido
+              {productAdding ? (
+                <span>
+                  <Spinner size={22} />
+                </span>
+              ) : (
+                <span>
+                  <Check size={22} />
+                  Confirmar pedido
+                </span>
+              )}
             </ConfirmButton>
           </OrderInfoBox>
         </div>

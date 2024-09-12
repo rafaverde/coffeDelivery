@@ -1,9 +1,29 @@
-import { CurrencyDollar, MapPin, Timer } from "@phosphor-icons/react"
+import { CurrencyDollar, MapPin, Receipt, Timer } from "@phosphor-icons/react"
 import deliveryGuy from "../../assets/sucess-delivery-guy.png"
 
 import { SuccessContainer, SuccessContent } from "./styles"
+import { useContext } from "react"
+import { OrderContext } from "../../contexts/OrderContext"
 
 export function Success() {
+  const { order } = useContext(OrderContext)
+
+  function paymentMethodConvert(method: string) {
+    switch (method) {
+      case "pix":
+        return "Pix"
+
+      case "credit-card":
+        return "Cartão de Crédito/Débito"
+
+      case "cash":
+        return "Dinheiro"
+
+      default:
+        return "Pix"
+    }
+  }
+
   return (
     <SuccessContainer>
       <SuccessContent>
@@ -22,9 +42,13 @@ export function Success() {
                 <span>
                   Entrega em{" "}
                   <b>
-                    Rua Boa Sorte, 102 - Condomínio Alto da Boa Sorte, Casa 4
+                    {order?.userInfo.address}, {order?.userInfo.addressNumber}
+                    {order?.userInfo.addressExtra !== ""
+                      ? `, ${order?.userInfo.addressExtra}`
+                      : null}
+                    ,
                   </b>{" "}
-                  - Parnamirim, RN
+                  {order?.userInfo.addressCity}, {order?.userInfo.addressState}
                 </span>
               </div>
               <div className="contentWrapper">
@@ -44,7 +68,31 @@ export function Success() {
                 <span>
                   Pagamento na entrega
                   <br />
-                  <b>Cartão de Crédito</b>
+                  <b>
+                    {order?.userInfo.paymentMethod
+                      ? paymentMethodConvert(order.userInfo.paymentMethod)
+                      : null}
+                  </b>
+                </span>
+              </div>
+              <div className="contentWrapper">
+                <div className="iconTitleWrapper dark-gray">
+                  <Receipt size={20} />
+                </div>
+                <span>
+                  <ul>
+                    {order?.products.map((item) => (
+                      <li>
+                        <p>
+                          {`${item.quantity}`}x {item.title} R${" "}
+                          {(item.price * item.quantity)
+                            .toFixed(2)
+                            .replace(".", ",")}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                  <b>Total R$ {order?.total.toFixed(2).replace(".", ",")}</b>
                 </span>
               </div>
             </div>

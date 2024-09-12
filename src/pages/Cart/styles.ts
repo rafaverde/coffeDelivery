@@ -149,6 +149,9 @@ export const ConfirmButton = styled.button`
   padding: 1rem;
   margin-top: 2rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   border: none;
   border-radius: 8px;
@@ -157,6 +160,13 @@ export const ConfirmButton = styled.button`
 
   text-transform: uppercase;
   font-weight: bolder;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
 
   &:disabled {
     opacity: 0.5;

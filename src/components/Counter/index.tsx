@@ -26,7 +26,11 @@ export function Counter({ onQuantityChange, actualQuantity }: CounterProps) {
 
   return (
     <CounterContainer>
-      <button onClick={decrementQuantity} disabled={quantity === 1}>
+      <button
+        type="button"
+        onClick={decrementQuantity}
+        disabled={quantity === 1}
+      >
         <Minus size={18} weight="bold" />
       </button>
       <input
@@ -38,7 +42,7 @@ export function Counter({ onQuantityChange, actualQuantity }: CounterProps) {
         readOnly
         value={quantity}
       />
-      <button onClick={incrementQuantity}>
+      <button type="button" onClick={incrementQuantity}>
         <Plus size={18} weight="bold" />
       </button>
     </CounterContainer>
