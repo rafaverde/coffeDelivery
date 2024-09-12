@@ -28,6 +28,8 @@ import { useContext } from "react"
 import { OrderContext } from "../../contexts/OrderContext"
 import { useNavigate } from "react-router-dom"
 
+import { useHookFormMask } from "use-mask-input"
+
 const newOrderFormValidationSchema = zod.object({
   zipcode: zod
     .string()
@@ -50,6 +52,7 @@ export type newOrderFormData = zod.infer<typeof newOrderFormValidationSchema>
 export function Cart() {
   const theme = useTheme()
   const navigate = useNavigate()
+
   const {
     productList,
     totalItemsPrice,
@@ -57,6 +60,7 @@ export function Cart() {
     CreateOrder,
     productAdding,
   } = useContext(OrderContext)
+
   const { register, handleSubmit, watch, formState, reset } =
     useForm<newOrderFormData>({
       resolver: zodResolver(newOrderFormValidationSchema),
@@ -71,6 +75,7 @@ export function Cart() {
         paymentMethod: "pix",
       },
     })
+  const registerWithMask = useHookFormMask(register)
 
   const selectedPaymentMethod = watch("paymentMethod")
   const isOrderFormDataValid = formState.isValid
@@ -101,11 +106,10 @@ export function Cart() {
               <div className="inputContainer">
                 <div>
                   <input
+                    {...registerWithMask("zipcode", "99999-999", {
+                      required: true,
+                    })}
                     type="text"
-                    id="zipcode"
-                    placeholder="CEP"
-                    maxLength={9}
-                    {...register("zipcode")}
                   />
                 </div>
                 <div>

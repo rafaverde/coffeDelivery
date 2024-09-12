@@ -80,6 +80,10 @@ export const SuccessContent = styled.div`
     li {
       margin-bottom: 0.5rem;
     }
+
+    .deliveryAddress {
+      text-transform: capitalize;
+    }
   }
 
   .iconTitleWrapper {

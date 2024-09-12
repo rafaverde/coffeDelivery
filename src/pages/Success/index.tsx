@@ -39,7 +39,7 @@ export function Success() {
                 <div className="iconTitleWrapper purple">
                   <MapPin size={20} weight="fill" />
                 </div>
-                <span>
+                <span className="deliveryAddress">
                   Entrega em{" "}
                   <b>
                     {order?.userInfo.address}, {order?.userInfo.addressNumber}

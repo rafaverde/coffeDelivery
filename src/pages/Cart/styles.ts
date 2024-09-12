@@ -104,6 +104,8 @@ export const UserInformation = styled.div`
       border: 1px solid ${({ theme }) => theme.colors["base-button"]};
       border-radius: 8px;
 
+      text-transform: capitalize;
+
       &[id="addressNumber"],
       &[id="addressState"] {
         max-width: 20%;
