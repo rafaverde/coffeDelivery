@@ -23,7 +23,9 @@ export const SelectPaymentButtonContainer = styled.label<SelectPaymentButtonCont
 
   border-radius: 8px;
   border: ${(props) =>
-    props.$isactive ? `1px solid ${props.theme.colors.purple}` : "none"};
+    props.$isactive
+      ? `1px solid ${props.theme.colors.purple}`
+      : `1px solid ${props.theme.colors["base-button"]}`};
 
   svg {
     color: ${({ theme }) => theme.colors.purple};

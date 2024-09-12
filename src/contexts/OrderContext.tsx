@@ -100,7 +100,7 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     })
 
     setProductAdding(true)
-    console.log(order)
+    setProductList([])
   }
 
   useEffect(() => {
