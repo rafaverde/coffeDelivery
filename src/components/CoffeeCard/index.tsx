@@ -15,7 +15,7 @@ export interface CoffeeToAddData {
 }
 
 export function CoffeeCard({ coffee }: CoffeeProps) {
-  const { handleAddProductToCart, productAdding } = useContext(OrderContext)
+  const { AddProductToCart, productAdding } = useContext(OrderContext)
 
   const [calculatedPrice, setCalculatedPrice] = useState(coffee.price)
   const [actualQuantity, setActualQuantity] = useState(1)
@@ -31,6 +31,10 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
     image: coffee.image,
     price: coffee.price,
     quantity: actualQuantity,
+  }
+
+  function handleAddProductToCart() {
+    AddProductToCart(coffeeToAdd)
   }
 
   return (
@@ -53,7 +57,7 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
           <Counter onQuantityChange={handleTotalPrice} />
           <CartButton
             variant="purple"
-            onAddToCart={() => handleAddProductToCart(coffeeToAdd)}
+            onAddToCart={handleAddProductToCart}
             isProductAdding={productAdding}
           />
         </div>

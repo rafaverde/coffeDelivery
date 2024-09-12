@@ -110,6 +110,7 @@ export function Cart() {
                       required: true,
                     })}
                     type="text"
+                    placeholder="CEP"
                   />
                 </div>
                 <div>

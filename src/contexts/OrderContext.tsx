@@ -28,8 +28,8 @@ interface OrderContextType {
   order?: Order
   deliveryTax: number
 
-  handleAddProductToCart: (product: CoffeeToAddData) => void
-  handleUpdateProductToCart: (product: CoffeeToAddData) => void
+  AddProductToCart: (product: CoffeeToAddData) => void
+  UpdateProductToCart: (product: CoffeeToAddData) => void
   CreateOrder: (data: newOrderFormData) => void
 }
 
@@ -49,7 +49,7 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
   }, 0)
   const deliveryTax = totalItemsPrice > 0 ? 3.5 : 0
 
-  function handleAddProductToCart(product: CoffeeToAddData) {
+  function AddProductToCart(product: CoffeeToAddData) {
     setProductList((prevList) => {
       const productExists = prevList.find((item) => item.id === product.id)
 
@@ -68,7 +68,7 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     setProductAdding(true)
   }
 
-  function handleUpdateProductToCart(product: CoffeeToAddData) {
+  function UpdateProductToCart(product: CoffeeToAddData) {
     setProductList((prevList) => {
       const productExists = prevList.find((item) => item.id === product.id)
 
@@ -128,8 +128,8 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
         deliveryTax,
         order,
         CreateOrder,
-        handleAddProductToCart,
-        handleUpdateProductToCart,
+        AddProductToCart,
+        UpdateProductToCart,
       }}
     >
       {children}
