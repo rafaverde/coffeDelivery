@@ -27,5 +27,6 @@ export function updateProductToCartAction(product: CoffeeToAddData) {
 export function resetProductAddingAction() {
   return {
     type: ActionTypes.RESET_PRODUCT_ADDING,
+    payload: false,
   }
 }

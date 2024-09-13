@@ -16,22 +16,23 @@ interface OrdersState {
 export function ordersReducer(state: OrdersState, action: any) {
   switch (action.type) {
     case ActionTypes.ADD_PRODUCT_TO_CART:
-      const productExists = state.productList?.find(
-        (item) => item.id === action.payload.product?.id
+      const productExists = state.productList.find(
+        (item) => item.id === action.payload.product.id
       )
+
       if (productExists) {
-        const updatedList = state.productList.map((item) =>
-          item.id === action.payload.product.id
+        const updatedList = state.productList.map((item) => {
+          return item.id === action.payload.product.id
             ? {
                 ...item,
                 quantity: item.quantity + action.payload.product.quantity,
               }
             : item
-        )
+        })
 
         return {
           ...state,
-          productList: [updatedList, action.payload.product],
+          productList: updatedList,
           productAdding: true,
         }
       } else {
@@ -59,7 +60,7 @@ export function ordersReducer(state: OrdersState, action: any) {
 
         return {
           ...state,
-          productList: [updatedList],
+          productList: updatedList,
         }
       } else {
         return {
@@ -71,7 +72,7 @@ export function ordersReducer(state: OrdersState, action: any) {
     case ActionTypes.RESET_PRODUCT_ADDING:
       return {
         ...state,
-        productAdding: false,
+        productAdding: action.payload,
       }
 
     default:
