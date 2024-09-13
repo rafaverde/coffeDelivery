@@ -35,10 +35,6 @@ export const SuccessContent = styled.div`
 
     gap: 2rem;
 
-    img {
-      width: 50%;
-    }
-
     .gradientBorder {
       display: flex;
       width: 50%;
@@ -61,7 +57,7 @@ export const SuccessContent = styled.div`
       padding: 2.5rem;
 
       border-radius: 7px 34px;
-      /* border: 1px solid ${({ theme }) => theme.colors.purple}; */
+      border: 1px solid ${({ theme }) => theme.colors.purple};
       background-color: ${({ theme }) => theme.colors.background};
     }
   }
@@ -130,7 +126,7 @@ export const SuccessContent = styled.div`
       }
 
       .gradientBorder {
-        max-width: 100%;
+        width: 100%;
       }
 
       .gradientPadding {

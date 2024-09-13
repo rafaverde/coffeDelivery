@@ -2,11 +2,13 @@ import { CurrencyDollar, MapPin, Receipt, Timer } from "@phosphor-icons/react"
 import deliveryGuy from "../../assets/sucess-delivery-guy.png"
 
 import { SuccessContainer, SuccessContent } from "./styles"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { OrderContext } from "../../contexts/OrderContext"
+import { useNavigate } from "react-router-dom"
 
 export function Success() {
   const { order } = useContext(OrderContext)
+  const navigate = useNavigate()
 
   function paymentMethodConvert(method: string) {
     switch (method) {
@@ -23,6 +25,12 @@ export function Success() {
         return "Pix"
     }
   }
+
+  useEffect(() => {
+    if (order === undefined) {
+      navigate("/")
+    }
+  }, [order])
 
   return (
     <SuccessContainer>
@@ -82,7 +90,7 @@ export function Success() {
                 <span>
                   <ul>
                     {order?.products.map((item) => (
-                      <li>
+                      <li key={item.id}>
                         <p>
                           {`${item.quantity}`}x {item.title} R${" "}
                           {(item.price * item.quantity)
@@ -97,7 +105,9 @@ export function Success() {
               </div>
             </div>
           </div>
-          <img src={deliveryGuy} />
+          <div>
+            <img src={deliveryGuy} />
+          </div>
         </main>
       </SuccessContent>
     </SuccessContainer>
