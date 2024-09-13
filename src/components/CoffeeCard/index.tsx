@@ -4,15 +4,11 @@ import { CartButton } from "../../components/CartButton"
 import { Counter } from "../Counter"
 import { useContext, useState } from "react"
 
-import { CoffeeProps, OrderContext } from "../../contexts/OrderContext"
-
-export interface CoffeeToAddData {
-  id: string
-  title: string
-  image: string
-  price: number
-  quantity: number
-}
+import {
+  CoffeeProps,
+  CoffeeToAddData,
+  OrderContext,
+} from "../../contexts/OrderContext"
 
 export function CoffeeCard({ coffee }: CoffeeProps) {
   const { AddProductToCart, productAdding } = useContext(OrderContext)

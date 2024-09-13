@@ -1,6 +1,17 @@
-import { createContext, ReactNode, useEffect, useState } from "react"
-import { CoffeeToAddData } from "../components/CoffeeCard"
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from "react"
 import { newOrderFormData } from "../pages/Cart"
+import { CoffeeToAddData, ordersReducer } from "../reducers/orders/reducer"
+import {
+  addProductToCartAction,
+  resetProductAddingAction,
+  updateProductToCartAction,
+} from "../reducers/orders/actions"
 
 export interface CoffeeProps {
   coffee: {
@@ -40,49 +51,40 @@ interface OrderContextProviderProps {
 export const OrderContext = createContext({} as OrderContextType)
 
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
-  const [productList, setProductList] = useState<CoffeeToAddData[]>([])
-  const [productAdding, setProductAdding] = useState(false)
-
   const [order, setOrder] = useState<Order>()
+
+  const [ordersState, dispatch] = useReducer(ordersReducer, {
+    productList: [],
+    productAdding: false,
+  })
+
+  const { productList, productAdding } = ordersState
+
   const totalItemsPrice = productList.reduce((accumulator, currentItem) => {
     return (accumulator += currentItem.price * currentItem.quantity)
   }, 0)
   const deliveryTax = totalItemsPrice > 0 ? 3.5 : 0
 
   function AddProductToCart(product: CoffeeToAddData) {
-    setProductList((prevList) => {
-      const productExists = prevList.find((item) => item.id === product.id)
-
-      if (productExists) {
-        const updatedList = prevList.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + product.quantity }
-            : item
-        )
-        return updatedList
-      } else {
-        return [...prevList, product]
-      }
-    })
-
-    setProductAdding(true)
+    dispatch(addProductToCartAction(product))
   }
 
   function UpdateProductToCart(product: CoffeeToAddData) {
-    setProductList((prevList) => {
-      const productExists = prevList.find((item) => item.id === product.id)
+    dispatch(updateProductToCartAction(product))
 
-      if (productExists) {
-        const updatedList = prevList.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: product.quantity }
-            : item
-        )
-        return updatedList
-      } else {
-        return [...prevList, product]
-      }
-    })
+    // setProductList((prevList) => {
+    //   const productExists = prevList.find((item) => item.id === product.id)
+    //   if (productExists) {
+    //     const updatedList = prevList.map((item) =>
+    //       item.id === product.id
+    //         ? { ...item, quantity: product.quantity }
+    //         : item
+    //     )
+    //     return updatedList
+    //   } else {
+    //     return [...prevList, product]
+    //   }
+    // })
   }
 
   function CreateOrder(data: newOrderFormData) {
@@ -99,8 +101,8 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       total: totalItemsPrice + deliveryTax,
     })
 
-    setProductAdding(true)
-    setProductList([])
+    // setProductAdding(true)
+    // setProductList([])
   }
 
   useEffect(() => {
@@ -108,8 +110,8 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
 
     if (productAdding) {
       timeout = setTimeout(() => {
-        setProductAdding(false)
-      }, 500)
+        dispatch(resetProductAddingAction())
+      }, 300)
     }
 
     return () => {

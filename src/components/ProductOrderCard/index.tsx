@@ -2,10 +2,10 @@ import { Trash } from "@phosphor-icons/react"
 
 import { Controls, ProductOrderCardContainer, RemoveButton } from "./styles"
 
-import { CoffeeToAddData } from "../CoffeeCard"
 import { Counter } from "../Counter"
 import { useContext, useEffect, useState } from "react"
 import { OrderContext } from "../../contexts/OrderContext"
+import { CoffeeToAddData } from "../../reducers/orders/reducer"
 
 export function ProductOrderCard({
   id,
@@ -58,6 +58,7 @@ export function ProductOrderCard({
           </RemoveButton>
         </Controls>
       </div>
+
       <span>{calculatedPrice.toFixed(2).toString().replace(".", ",")}</span>
     </ProductOrderCardContainer>
   )
