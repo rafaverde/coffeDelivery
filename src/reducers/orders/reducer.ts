@@ -1,4 +1,5 @@
 import { ActionTypes } from "./actions"
+import { produce } from "immer"
 
 export interface CoffeeToAddData {
   id: string
@@ -20,54 +21,39 @@ export function ordersReducer(state: OrdersState, action: any) {
         (item) => item.id === action.payload.product.id
       )
 
-      if (productExists) {
-        const updatedList = state.productList.map((item) => {
-          return item.id === action.payload.product.id
-            ? {
-                ...item,
-                quantity: item.quantity + action.payload.product.quantity,
-              }
-            : item
+      if (!productExists) {
+        return produce(state, (draft) => {
+          draft.productList.push(action.payload.product)
+          draft.productAdding = true
         })
-
-        return {
-          ...state,
-          productList: updatedList,
-          productAdding: true,
-        }
-      } else {
-        return {
-          ...state,
-          productList: [...state.productList, action.payload.product],
-          productAdding: true,
-        }
       }
+
+      const currentProductIndex = state.productList.findIndex((product) => {
+        return product.id === action.payload.product.id
+      })
+
+      return produce(state, (draft) => {
+        draft.productList[currentProductIndex].quantity +=
+          action.payload.product.quantity
+        draft.productAdding = true
+      })
 
     case ActionTypes.UPDATE_PRODUCT_TO_CART:
-      const productIsOnList = state.productList.find(
-        (item) => item.id === action.payload.product.id
+      const currentProductOnListIndex = state.productList.findIndex(
+        (product) => {
+          return product.id === action.payload.product.id
+        }
       )
 
-      if (productIsOnList) {
-        const updatedList = state.productList.map((item) =>
-          item.id === action.payload.product.id
-            ? {
-                ...item,
-                quantity: action.payload.product.quantity,
-              }
-            : item
-        )
-
-        return {
-          ...state,
-          productList: updatedList,
-        }
-      } else {
-        return {
-          ...state,
-          productList: [...state.productList, action.payload.product],
-        }
+      if (currentProductOnListIndex >= 0) {
+        return produce(state, (draft) => {
+          draft.productList[currentProductOnListIndex].quantity =
+            action.payload.product.quantity
+          draft.productAdding = true
+        })
       }
+
+      break
 
     case ActionTypes.RESET_PRODUCT_ADDING:
       return {

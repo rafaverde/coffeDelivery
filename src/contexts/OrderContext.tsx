@@ -5,8 +5,11 @@ import {
   useReducer,
   useState,
 } from "react"
+
 import { newOrderFormData } from "../pages/Cart"
+
 import { CoffeeToAddData, ordersReducer } from "../reducers/orders/reducer"
+
 import {
   addProductToCartAction,
   resetProductAddingAction,
@@ -71,20 +74,6 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
 
   function UpdateProductToCart(product: CoffeeToAddData) {
     dispatch(updateProductToCartAction(product))
-
-    // setProductList((prevList) => {
-    //   const productExists = prevList.find((item) => item.id === product.id)
-    //   if (productExists) {
-    //     const updatedList = prevList.map((item) =>
-    //       item.id === product.id
-    //         ? { ...item, quantity: product.quantity }
-    //         : item
-    //     )
-    //     return updatedList
-    //   } else {
-    //     return [...prevList, product]
-    //   }
-    // })
   }
 
   function CreateOrder(data: newOrderFormData) {
@@ -100,9 +89,6 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       products: productList,
       total: totalItemsPrice + deliveryTax,
     })
-
-    // setProductAdding(true)
-    // setProductList([])
   }
 
   useEffect(() => {
