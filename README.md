@@ -2,20 +2,20 @@
 
 # Coffee Delivery
 
-<p align="center">
+<p align="">
 Project developed in Rocketseat's React.js training of a SPA (Single Page Application) built with React.js with Typescript of a frontend for a Coffee Delivery.</p>
 
-<p align="center">
+<p align="">
 You can see the result <a href="https://coffeedelivery-rafaverde.netlify.app/" target="_blank">here.</a>
 
-<p align="center">
+<p align="">
   <a href="#-tecnologias">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">License</a>
 </p>
 
-<p align="center">
+<p align="=">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=49AA26&labelColor=000000">
 </p>
 
