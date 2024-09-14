@@ -4,11 +4,8 @@ import { CartButton } from "../../components/CartButton"
 import { Counter } from "../Counter"
 import { useContext, useState } from "react"
 
-import {
-  CoffeeProps,
-  CoffeeToAddData,
-  OrderContext,
-} from "../../contexts/OrderContext"
+import { CoffeeProps, OrderContext } from "../../contexts/OrderContext"
+import { CoffeeToAddData } from "../../reducers/orders/reducer"
 
 export function CoffeeCard({ coffee }: CoffeeProps) {
   const { AddProductToCart, productAdding } = useContext(OrderContext)
