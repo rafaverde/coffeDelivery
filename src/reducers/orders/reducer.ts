@@ -61,6 +61,12 @@ export function ordersReducer(state: OrdersState, action: any) {
         productAdding: action.payload,
       }
 
+    case ActionTypes.RESET_PRODUCTS_ON_CART:
+      return {
+        ...state,
+        productList: [],
+      }
+
     default:
       break
   }

@@ -31,3 +31,9 @@ export function resetProductAddingAction() {
     payload: false,
   }
 }
+
+export function resetProductsOnCartAtion() {
+  return {
+    type: ActionTypes.RESET_PRODUCTS_ON_CART,
+  }
+}

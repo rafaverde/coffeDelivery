@@ -13,6 +13,7 @@ import { CoffeeToAddData, ordersReducer } from "../reducers/orders/reducer"
 import {
   addProductToCartAction,
   resetProductAddingAction,
+  resetProductsOnCartAtion,
   updateProductToCartAction,
 } from "../reducers/orders/actions"
 
@@ -56,10 +57,24 @@ export const OrderContext = createContext({} as OrderContextType)
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const [order, setOrder] = useState<Order>()
 
-  const [ordersState, dispatch] = useReducer(ordersReducer, {
-    productList: [],
-    productAdding: false,
-  })
+  const [ordersState, dispatch] = useReducer(
+    ordersReducer,
+    {
+      productList: [],
+      productAdding: false,
+    },
+    (initialState) => {
+      const storedStateAsJSON = localStorage.getItem(
+        "@coffee-delivery:product-list-1.0.0"
+      )
+
+      if (storedStateAsJSON) {
+        return JSON.parse(storedStateAsJSON)
+      }
+
+      return initialState
+    }
+  )
 
   const { productList, productAdding } = ordersState
 
@@ -76,6 +91,10 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     dispatch(updateProductToCartAction(product))
   }
 
+  function ResetProductsOnCart() {
+    dispatch(resetProductsOnCartAtion())
+  }
+
   function CreateOrder(data: newOrderFormData) {
     if (productList.length === 0) {
       return alert(
@@ -89,6 +108,8 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       products: productList,
       total: totalItemsPrice + deliveryTax,
     })
+
+    ResetProductsOnCart()
   }
 
   useEffect(() => {
@@ -106,6 +127,12 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       }
     }
   }, [productAdding])
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(ordersState)
+
+    localStorage.setItem("@coffee-delivery:product-list-1.0.0", stateJSON)
+  }, [ordersState])
 
   return (
     <OrderContext.Provider
