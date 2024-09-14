@@ -6,7 +6,7 @@
 Project developed in Rocketseat's React.js training of a SPA (Single Page Application) built with React.js with Typescript of a frontend for a Coffee Delivery.</p>
 
 <p align="center">
-You can see the result <a href="https://foodexplorer.vrd.ppg.br/" target="_blank">here.</a>
+You can see the result <a href="https://coffeedelivery-rafaverde.netlify.app/" target="_blank">here.</a>
 
 <p align="center">
   <a href="#-tecnologias">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
